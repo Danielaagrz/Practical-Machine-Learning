@@ -41,6 +41,10 @@ nsv<-nearZeroVar(trainset)
 trainset<-trainset[,-nsv]
 testset<-testset[,-nsv]
 ```
+
+
+
+
 Remove missing values 
 ```{r}
 isna<- sapply(trainset, function(x) mean(is.na(x))) > 0.95
@@ -58,6 +62,7 @@ pred<-predict(modfit, testset)
 result<-confusionMatrix(pred, factor(testset$classe))
 result
 ```
+---![Screen Shot 2021-05-05 at 3 18 09 PM](https://user-images.githubusercontent.com/78766486/117210603-21a3c980-adb5-11eb-8068-ba538bd7d874.png)
 
 ## Algorithm 2 (Generalized boosted model)
 ```{r}
@@ -67,6 +72,10 @@ result1<-confusionMatrix(pred1, factor(testset$classe))
 result1
 ```
 
+---![Screen Shot 2021-05-05 at 3 24 58 PM](https://user-images.githubusercontent.com/78766486/117211392-29b03900-adb6-11eb-881b-6578034cf064.png)
+
+
+
 ## Algorithm 3 (linear discriminative analysis)
 ```{r}
 modfit2 <- train(classe ~., data=trainset, method="lda", trControl = control, tuneLength = 5)
@@ -74,6 +83,7 @@ pred2<-predict(modfit2, testset)
 result2<-confusionMatrix(pred2, factor(testset$classe))
 result2
 ```
+---![Screen Shot 2021-05-05 at 3 25 10 PM](https://user-images.githubusercontent.com/78766486/117211402-2cab2980-adb6-11eb-9268-c74d5d8842bd.png)
 
 We can see that the model with the highest accuracy is the Generalized boosted model.. It's expected out of sample error is 1-accuracy (.008). 
 
@@ -83,3 +93,4 @@ Thus we will use it to predict our new data set (20 diff test cases):
 prediction<-predict(modfit1, newdata=testing)
 prediction
 ```
+---![Screen Shot 2021-05-05 at 3 25 19 PM](https://user-images.githubusercontent.com/78766486/117211462-3e8ccc80-adb6-11eb-8214-e06f5e3d7d99.png)
